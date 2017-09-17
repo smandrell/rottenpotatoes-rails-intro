@@ -14,15 +14,15 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     
     if params[:sort]
-      @s = params[:sort]
+      @sorting = params[:sort]
       session[:sort] = params[:sort]
     elsif session[:sort]
-      @s = session[:sort]
+      @sorting = session[:sort]
     else
-      @s = nil
+      @sorting = nil
     end
     
-    if @s
+    if @sorting
       @movies = Movie.order(@s).all
     end
     
