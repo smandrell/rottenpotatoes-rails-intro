@@ -22,8 +22,27 @@ class MoviesController < ApplicationController
       @sorting = nil
     end
     
-    if @sorting
+    if params[:ratings]
+      @rate = params[:ratings]
+      session[:ratings] = params[:ratings]
+    elsif session[:ratings]
+      @rate = session[:ratings]
+    else
+      @rate = nil
+    end
+    
+    if @sorting and @rate
+      @movies = Movie.where(:rating => @rate.keys).order(@sorting).all
+    elsif @sorting
       @movies = Movie.order(@sorting).all
+    elsif @rate
+      @movies = Movie.where(:rating => @rate.keys).all
+    else
+      @movies = Movie.all
+    end
+    
+    if !@rate
+      @rate = Hash.new
     end
     
   end
