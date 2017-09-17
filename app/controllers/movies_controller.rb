@@ -11,7 +11,9 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    # @movies = Movie.all
+    @all_ratings = Movie.all_ratings
+    @sorted = params[:sort] || session[:sort]
     
     if params[:sort]
       @sorting = params[:sort]
@@ -32,6 +34,12 @@ class MoviesController < ApplicationController
       @rate = session[:ratings]
     else
       @rate = nil
+    end
+    
+    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
+      session[:sort] = @sorted
+      session[:ratings] = @rate
+      redirect_to :sort => @sorted, :ratings => @rate and return
     end
     
     if params[:ratings]
