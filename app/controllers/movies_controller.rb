@@ -23,7 +23,7 @@ class MoviesController < ApplicationController
     end
     
     if @sorting
-      @movies = Movie.order(@s).all
+      @movies = Movie.order(@sorting).all
     end
     
   end
