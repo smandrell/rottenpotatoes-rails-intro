@@ -62,10 +62,11 @@ class MoviesController < ApplicationController
     
     if @sorting
       @movies = Movie.order(@sorting).all
+    end
     
     if @rate
       @movies = Movie.where(:rating => @rate.keys).all
-      
+    end
       
     
     if !@rate
