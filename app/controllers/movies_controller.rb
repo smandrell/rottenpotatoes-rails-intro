@@ -51,11 +51,11 @@ class MoviesController < ApplicationController
     end
     
     if @sorting
-      @movies = Movie.order(@sorting).all
+      @movies = @movies.order(@sorting).all
     end
     
     if @rate
-      @movies = Movie.where(:rating => @rate.keys).all
+      @movies = @movies.where(:rating => @rate.keys).all
     end
     
   end
