@@ -11,7 +11,7 @@ class MoviesController < ApplicationController
   end
 
   def index
-
+    @movie = Movie.all
     @all_ratings = Movie.all_ratings
     @sorted = params[:sort] || session[:sort]
     
@@ -41,16 +41,32 @@ class MoviesController < ApplicationController
       redirect_to :sort => @sorted, :ratings => @rate and return
     end
     
-    
-    if @sorting and @rate
-      @movies = Movie.where(:rating => @rate.keys).order(@sorting).all
-    elsif @sorting
-      @movies = Movie.order(@sorting).all
-    elsif @rate
-      @movies = Movie.where(:rating => @rate.keys).all
+    if params[:ratings]
+      @rate = params[:ratings]
+      session[:ratings] = params[:ratings]
+    elsif session[:ratings]
+      @rate = session[:ratings]
     else
-      @movies = Movie.all
+      @rate = nil
     end
+    
+    # if @sorting and @rate
+    #   @movies = Movie.where(:rating => @rate.keys).order(@sorting).all
+    # elsif @sorting
+    #   @movies = Movie.order(@sorting).all
+    # elsif @rate
+    #   @movies = Movie.where(:rating => @rate.keys).all
+    # else
+    #   @movies = Movie.all
+    # end
+    
+    if @sorting
+      @movies = Movie.order(@sorting).all
+    
+    if @rate
+      @movies = Movie.where(:rating => @rate.keys).all
+      
+      
     
     if !@rate
       @rate = Hash.new
