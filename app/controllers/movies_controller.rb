@@ -35,12 +35,6 @@ class MoviesController < ApplicationController
       @rate = nil
     end
     
-    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
-      session[:sort] = @sorted
-      session[:ratings] = @rate
-      redirect_to :sort => @sorted, :ratings => @rate and return
-    end
-    
     if params[:ratings]
       @rate = params[:ratings]
       session[:ratings] = params[:ratings]
@@ -49,6 +43,14 @@ class MoviesController < ApplicationController
     else
       @rate = nil
     end
+    
+    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
+      session[:sort] = @sorted
+      session[:ratings] = @rate
+      redirect_to :sort => @sorted, :ratings => @rate and return
+    end
+    
+
     
     if @sorting and @rate
       @movies = Movie.where(:rating => @rate.keys).order(@sorting).all
