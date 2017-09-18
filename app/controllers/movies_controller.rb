@@ -11,7 +11,7 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movie = Movie.all
+    @movies = Movie.all
     @all_ratings = Movie.all_ratings
     @sorted = params[:sort] or session[:sort]
     
