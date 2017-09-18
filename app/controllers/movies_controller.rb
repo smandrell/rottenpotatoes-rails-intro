@@ -50,16 +50,6 @@ class MoviesController < ApplicationController
       @rate = nil
     end
     
-    # if @sorting and @rate
-    #   @movies = Movie.where(:rating => @rate.keys).order(@sorting).all
-    # elsif @sorting
-    #   @movies = Movie.order(@sorting).all
-    # elsif @rate
-    #   @movies = Movie.where(:rating => @rate.keys).all
-    # else
-    #   @movies = Movie.all
-    # end
-    
     if @sorting
       @movies = Movie.order(@sorting).all
     end
@@ -67,7 +57,6 @@ class MoviesController < ApplicationController
     if @rate
       @movies = Movie.where(:rating => @rate.keys).all
     end
-      
     
     if !@rate
       @rate = Hash.new
